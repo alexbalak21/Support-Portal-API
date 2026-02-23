@@ -69,7 +69,6 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<ApiResponse<?>> register(@Valid @RequestBody RegisterRequest req) {
         log.info("Registration attempt for {}", req.getEmail());
-
         try {
             var user = authService.register(req);
 
@@ -92,12 +91,10 @@ public class AuthController {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(401).build();
         }
-
         Object principal = authentication.getPrincipal();
         if (principal instanceof CustomUserDetails user) {
             return ResponseEntity.ok(new UserInfo(user));
         }
-
         return ResponseEntity.status(500).build();
     }
 

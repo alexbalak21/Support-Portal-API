@@ -23,6 +23,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Service
 @Transactional
 public class UserService {
+                        @org.springframework.beans.factory.annotation.Autowired
+                        private app.service.UserProfileImageService userProfileImageService;
+
+                        /**
+                         * Get current user as UserDto with profile image base64 data
+                         */
+                        @Transactional(readOnly = true)
+                        public UserDto getUserDtoWithProfileImage(Long userId) {
+                                User user = userRepository.findById(userId)
+                                                .orElseThrow(() -> new RuntimeException("User not found"));
+                                String profileImageBase64 = userProfileImageService.getBase64Image(userId);
+                                return UserDto.from(user, profileImageBase64);
+                        }
                 /**
                  * Change the current user's password after verifying the current password
                  * @param username the username (email) of the authenticated user
@@ -115,7 +128,7 @@ public class UserService {
 
         User saved = userRepository.save(user);
 
-        return UserDto.from(saved);
+        return UserDto.from(saved, null);
     }
 
     // ----------------------------------------------------
@@ -177,7 +190,7 @@ public class UserService {
 
         User saved = userRepository.save(user);
 
-        return UserDto.from(saved);
+        return UserDto.from(saved, null);
     }
 
     // ----------------------------------------------------
@@ -195,7 +208,7 @@ public class UserService {
 
         User saved = userRepository.save(user);
 
-        return UserDto.from(saved);
+        return UserDto.from(saved, null);
     }
 
     public boolean existsById(Long id) {
@@ -207,7 +220,7 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
-        return UserDto.from(user);
+        return UserDto.from(user, null);
     }
         /**
          * Returns the role name for a given role ID, or throws if not found.

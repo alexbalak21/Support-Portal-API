@@ -13,34 +13,37 @@ import app.security.Ownership;
 import app.security.OwnershipType;
 import app.security.RequiresPermission;
 import app.service.TicketService;
+import app.security.CustomUserDetails;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.Authentication;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/api/tickets")
 public class TicketController {
-        // ----------------------------------------------------
-        // GET ALL TICKETS ASSIGNED TO CURRENT USER
-        // ----------------------------------------------------
-        @Autowired
-        private app.service.AuthService authService;
 
-        @GetMapping("/assigned/me")
-        @RequiresPermission("ticket.read")
-        @Ownership(OwnershipType.SELF)
-        public List<Ticket> getTicketsAssignedToCurrentUser() {
-            try {
-                Long userId = authService.getCurrentUserId();
-                return ticketService.getTicketsAssignedToUser(userId);
-            } catch (RuntimeException e) {
-                return List.of();
-            }
+
+    // ----------------------------------------------------
+    // GET ALL TICKETS ASSIGNED TO CURRENT USER
+    // ----------------------------------------------------
+    @GetMapping("/assigned/me")
+    @RequiresPermission("ticket.read")
+    @Ownership(OwnershipType.SELF)
+    public List<Ticket> getTicketsAssignedToCurrentUser(Authentication authentication) {
+        if (authentication == null || !authentication.isAuthenticated()) {
+            return List.of();
         }
+        Object principal = authentication.getPrincipal();
+        if (principal instanceof CustomUserDetails user) {
+            return ticketService.getTicketsAssignedToUser(user.getId());
+        }
+        return List.of();
+    }
+
     // ----------------------------------------------------
     // GET ALL TICKETS ASSIGNED TO A USER
     // ----------------------------------------------------

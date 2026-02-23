@@ -23,9 +23,11 @@ import app.service.UserService;
 public class UserController {
 
     private final UserService userService;
+    private final app.service.AuthService authService;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, app.service.AuthService authService) {
         this.userService = userService;
+        this.authService = authService;
     }
 
     /**
@@ -39,6 +41,16 @@ public class UserController {
             return userService.getAllUsersByRole(roleId);
         }
         return userService.getAllBasic();
+    }
+
+    
+    @GetMapping("/users/me")
+    @RequiresPermission("user.read")
+    public app.dto.UserDto getMyUserInfo(@AuthenticationPrincipal UserDetails userDetails) {
+        if (!(userDetails instanceof app.security.CustomUserDetails customUser)) {
+            throw new RuntimeException("Not authenticated or invalid principal");
+        }
+        return userService.getUserDtoWithProfileImage(customUser.getId());
     }
 
     /**

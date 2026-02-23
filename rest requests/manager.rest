@@ -19,6 +19,11 @@ GET {{baseUrl}}/api/auth/me
 Authorization: Bearer {{Access_token}}
 
 
+### GET ME ###
+GET {{baseUrl}}/api/users/me
+Authorization: Bearer {{Access_token}}
+
+
 ### GET PROFIEL IMAGE ###
 GET {{baseUrl}}/api/users/profile-image/5
 Authorization: Bearer {{Access_token}}

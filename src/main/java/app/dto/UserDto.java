@@ -12,27 +12,25 @@ public record UserDto(
         LocalDateTime createdAt,
         LocalDateTime updatedAt,
         List<RoleDto> roles,
-        List<String> permissions
+        List<String> permissions,
+        String profileImage
 ) {
-    public static UserDto from(User user) {
+    public static UserDto from(User user, String profileImageBase64) {
         return new UserDto(
                 user.getId(),
                 user.getName(),
                 user.getEmail(),
                 user.getCreatedAt(),
                 user.getUpdatedAt(),
-
-                // Convert roles to RoleDto
                 user.getRoles().stream()
                         .map(RoleDto::from)
                         .toList(),
-
-                // Flatten permissions across all roles
                 user.getRoles().stream()
                         .flatMap(role -> role.getPermissions().stream())
                         .map(p -> p.getName())
                         .distinct()
-                        .toList()
+                        .toList(),
+                profileImageBase64
         );
     }
 }
