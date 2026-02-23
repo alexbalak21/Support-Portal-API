@@ -38,7 +38,7 @@ public class UserProfileImageService {
                 .outputQuality(0.8)
                 .outputFormat("jpg")
                 .toOutputStream(baos);
-        log.info("Image compressed to 120x120, output size: {} bytes", baos.size());
+        log.info("Image compressed to 100x100, output size: {} bytes", baos.size());
         byte[] compressedData = baos.toByteArray();
         Optional<UserProfileImage> existing = repo.findById(id);
         UserProfileImage img;
@@ -72,5 +72,11 @@ public class UserProfileImageService {
     public void deleteProfileImage(Long id) {
         UserProfileImage img = repo.findById(id).orElse(null);
         if (img != null) repo.delete(img);
+    }
+    /**
+     * Delete profile image by user id (for controller convenience)
+     */
+    public void deleteProfileImageByUserId(Long userId) {
+        deleteProfileImage(userId);
     }
 }

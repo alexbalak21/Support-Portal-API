@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
+
 @RestController
 @RequestMapping("/api")
 public class UserProfileImageController {
@@ -29,19 +31,24 @@ public class UserProfileImageController {
     private app.service.AuthService authService;
 
     @PostMapping("/users/profile-image")
-    public ResponseEntity<Long> uploadProfileImage(@RequestParam("file") MultipartFile file) {
-        try {
-            Long userId = authService.getCurrentUserId();
-            log.info("Uploading profile image for user id: {}", userId);
-            log.info("File received: name={}, size={}, type={}", file.getOriginalFilename(), file.getSize(), file.getContentType());
-            Long savedId = userProfileImageService.saveProfileImage(userId, file);
-            log.info("Profile image saved with id: {}", savedId);
-            return ResponseEntity.ok(savedId);
-        } catch (Exception e) {
-            log.error("Failed to upload profile image", e);
-            return ResponseEntity.badRequest().build();
+        public ResponseEntity<String> uploadProfileImage(@RequestParam("file") MultipartFile file) {
+            try {
+                Long userId = authService.getCurrentUserId();
+                log.info("Uploading profile image for user id: {}", userId);
+                log.info("File received: name={}, size={}, type={}", file.getOriginalFilename(), file.getSize(), file.getContentType());
+                Long savedId = userProfileImageService.saveProfileImage(userId, file);
+                log.info("Profile image saved with id: {}", savedId);
+                UserProfileImage img = userProfileImageService.getProfileImageById(savedId);
+                if (img == null || img.getData() == null) {
+                    return ResponseEntity.notFound().build();
+                }
+                String base64 = java.util.Base64.getEncoder().encodeToString(img.getData());
+                return ResponseEntity.ok("{\"imageData\":\"" + base64 + "\"}");
+            } catch (Exception e) {
+                log.error("Failed to upload profile image", e);
+                return ResponseEntity.badRequest().build();
+            }
         }
-    }
 
     @GetMapping("/users/profile-image/{id}")
     public ResponseEntity<byte[]> getProfileImage(@PathVariable Long id) {
@@ -65,5 +72,18 @@ public class UserProfileImageController {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + img.getFilename() + "\"")
                 .contentType(MediaType.parseMediaType(img.getMimeType()))
                 .body(img.getData());
+    }
+
+    @DeleteMapping("/users/profile-image")
+    public ResponseEntity<Void> deleteMyProfileImage() {
+        try {
+            Long userId = authService.getCurrentUserId();
+            log.info("Deleting profile image for user id: {}", userId);
+            userProfileImageService.deleteProfileImageByUserId(userId);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            log.error("Failed to delete profile image", e);
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
