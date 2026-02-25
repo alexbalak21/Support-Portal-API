@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:8100
 
-### LOGIN ADMIN USER ###
+### LOGIN ADMIN USER 1 ###
 # @name admin
 POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
@@ -14,6 +14,57 @@ Content-Type: application/json
 @adminRefresh_token = {{admin.response.body.data.refresh_token}}
 
 
+### CREATE MANAGER USER 2 ###
+POST {{baseUrl}}/api/admin/users
+Authorization: Bearer {{adminAccess_token}}
+Content-Type: application/json
+
+{
+    "name": "Michael Anderson",
+    "email": "michael.anderson@example.com",
+    "password": "password1234",
+    "roleIds": [4]  
+}
+
+
+## CREATE SUPPORT USER 3 ###
+POST {{baseUrl}}/api/admin/users
+Authorization: Bearer {{adminAccess_token}}
+Content-Type: application/json
+
+{
+    "name": "Claire Dupont",
+    "email": "claire.dupont@example.com",
+    "password": "password1234",
+    "roleIds": [3]
+}
+
+
+### CREATE SUPPORT USER 4 ###
+POST {{baseUrl}}/api/admin/users
+Authorization: Bearer {{adminAccess_token}}
+Content-Type: application/json
+
+{
+    "name": "Julien Morel",
+    "email": "julien.morel@example.com",
+    "password": "password1234",
+    "roleIds": [3]
+}
+
+### CREATE SUPPORT USER 5 ###
+POST {{baseUrl}}/api/admin/users
+Authorization: Bearer {{adminAccess_token}}
+Content-Type: application/json
+
+{
+    "name": "Amélie Rousseau",
+    "email": "amelie.rousseau@example.com",
+    "password": "password1234",
+    "roleIds": [3]
+}
+
+
 
 
 ### CREATE USER 6 ###
@@ -22,8 +73,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Alyx Vance",
-    "email": "alyx.vance@example.com",
+    "name": "Emma Johnson",
+    "email": "emma.johnson@example.com",
     "password": "password1234",
     "roleIds": [2]
 }
@@ -34,8 +85,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Sarah Connor",
-    "email": "sarah.connor@example.com",
+    "name": "Daniel Martin",
+    "email": "daniel.martin@example.com",
     "password": "password1234",
     "roleIds": [2]
 }
@@ -46,8 +97,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Ethan Winters",
-    "email": "ethan.winters@example.com",
+    "name": "Sophie Bernard",
+    "email": "sophie.bernard@example.com",
     "password": "password1234",
     "roleIds": [2]
 }
@@ -58,8 +109,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Lara Croft",
-    "email": "lara.croft@example.com",
+    "name": "Lucas Moreau",
+    "email": "lucas.moreau@example.com",
     "password": "password1234",
     "roleIds": [2]
 }
@@ -70,8 +121,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Marcus Holloway",
-    "email": "marcus.holloway@example.com",
+    "name": "Olivia Turner",
+    "email": "olivia.turner@example.com",
     "password": "password1234",
     "roleIds": [2]
 }
@@ -82,8 +133,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Jill Valentine",
-    "email": "jill.valentine@example.com",
+    "name": "Nathan Scott",
+    "email": "nathan.scott@example.com",
     "password": "password1234",
     "roleIds": [2]
 }
@@ -94,8 +145,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Isaac Clarke",
-    "email": "isaac.clarke@example.com",
+    "name": "Chloé Dubois",
+    "email": "chloe.dubois@example.com",
     "password": "password1234",
     "roleIds": [2]
 }
@@ -106,8 +157,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Faith Connors",
-    "email": "faith.connors@example.com",
+    "name": "Gabriel Lefèvre",
+    "email": "gabriel.lefevre@example.com",
     "password": "password1234",
     "roleIds": [2]
 }
@@ -118,8 +169,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Booker DeWitt",
-    "email": "booker.dewitt@example.com",
+    "name": "Isabelle Laurent",
+    "email": "isabelle.laurent@example.com",
     "password": "password1234",
     "roleIds": [2]
 }
@@ -130,8 +181,8 @@ Authorization: Bearer {{adminAccess_token}}
 Content-Type: application/json
 
 {
-    "name": "Elizabeth Comstock",
-    "email": "elizabeth.comstock@example.com",
+    "name": "Thomas Keller",
+    "email": "thomas.keller@example.com",
     "password": "password1234",
     "roleIds": [2]
 }

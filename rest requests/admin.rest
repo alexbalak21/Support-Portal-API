@@ -1,4 +1,5 @@
 @baseUrl = http://localhost:8100
+@baseUrl = https://issue-tracker-vysg.onrender.com
 
 ### LOGIN ADMIN USER ###
 # @name admin

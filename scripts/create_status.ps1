@@ -1,5 +1,6 @@
 # Base URL
 $baseUrl = "http://localhost:8100"
+$baseUrl = "https://issue-tracker-vysg.onrender.com"
 
 Write-Host "=== Creating Statuses ===" -ForegroundColor Cyan
 

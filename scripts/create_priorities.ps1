@@ -1,5 +1,7 @@
 # Base URL
+# DONE
 $baseUrl = "http://localhost:8100"
+$baseUrl = "https://issue-tracker-vysg.onrender.com"
 
 Write-Host "=== Creating Priorities ===" -ForegroundColor Cyan
 
