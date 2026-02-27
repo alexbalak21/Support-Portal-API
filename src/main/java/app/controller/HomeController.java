@@ -1,12 +1,20 @@
 package app.controller;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
-@Controller
+import java.util.Map;
+
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
 public class HomeController {
-      // Catch-all for non-API routes
-    @RequestMapping({"/{path:[^\\.]*}", "/**/{path:[^\\.]*}"})
-    public String forward() {
-        return "forward:/index.html";
+
+    @GetMapping("/")
+    public Map<String, String> home() {
+        return Map.of("message", "This is an API, use it with the frontend application");
+    }
+
+    @GetMapping("/health")
+    public Map<String, String> health() {
+        return Map.of("status", "OK");
     }
 }

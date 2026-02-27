@@ -4,6 +4,9 @@ mvn clean package -DskipTests
 BUILD DOCKER IMAGE 
 docker build -t issue-tracker .
 
+RUN Docker Image
+docker run -p 8100:8100 --env-file .env issue-tracker
+
 Login to DOCKER
 docker login
 
