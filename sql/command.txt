@@ -1,0 +1,9 @@
+backup:
+pg_dump "postgresql://issue_tracker_ssr2_user:BaoH74Etym8vuL4RNjiTUQn0tk6@dpg-d6fi57haae7s73ara0jg-a.frankfurt-postgres.render.com/issue_tracker_ssr2" > backup.sql
+
+Impot:
+Model:
+psql "postgresql://USER:PASSWORD@HOST/DATABASE" -f backup.sql
+
+Render:
+psql "postgresql://issue_tracker_ssr2_user:BaoH74Etym8vuL4RNjiTUQn0tk6@dpg-d6fi57haae7s73ara0jg-a.frankfurt-postgres.render.com/issue_tracker_ssr2" -f backup.sql
