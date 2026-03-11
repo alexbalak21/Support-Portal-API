@@ -9,7 +9,7 @@ You can find the frontend source code here:
 
 🔗 **https://github.com/alexbalak21/Issue-Tracker-App**
 
-
+---
 
 **Version:** 1.1 | **Docker Image:** `alexbalak/issue-tracker:latest` | **Default Port:** `8100`
 
