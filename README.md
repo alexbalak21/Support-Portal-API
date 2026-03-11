@@ -2,6 +2,15 @@
 
 A full-stack Issue Tracker application for managing, assigning, and resolving issues within a team. Built with a Spring Boot REST API backend and a React/TypeScript frontend served as static assets.
 
+## Frontend Repository
+
+This backend powers a modern **React / TypeScript + Tailwind CSS** frontend.  
+You can find the frontend source code here:
+
+🔗 **https://github.com/alexbalak21/Issue-Tracker-App**
+
+
+
 **Version:** 1.1 | **Docker Image:** `alexbalak/issue-tracker:latest` | **Default Port:** `8100`
 
 ---
