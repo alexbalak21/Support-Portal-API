@@ -7,7 +7,7 @@ A full-stack Issue Tracker application for managing, assigning, and resolving is
 This backend powers a modern **React / TypeScript + Tailwind CSS** frontend.  
 You can find the frontend source code here:
 
-🔗 **https://github.com/alexbalak21/Issue-Tracker-App**
+🔗 **https://github.com/alexbalak21/Suppurt-Portal**
 
 ---
 
