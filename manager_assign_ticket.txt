@@ -1,0 +1,38 @@
+Manager ticket assignment request
+
+Endpoint:
+PATCH /api/tickets/{ticketId}/assign
+
+Permission:
+ticket.assign
+
+Headers:
+Authorization: Bearer <manager_access_token>
+Content-Type: application/json
+
+Request body:
+{
+  "user_id": 123
+}
+
+Notes:
+- Replace {ticketId} with the ticket you want to assign.
+- Set user_id to the id of the user/agent the manager wants to assign the ticket to.
+- The API returns the updated Ticket object.
+- If user_id is null, the ticket is unassigned.
+
+Example request:
+PATCH /api/tickets/6/assign
+Authorization: Bearer <manager_access_token>
+Content-Type: application/json
+
+{
+  "user_id": 15
+}
+
+Example response:
+200 OK
+{
+  "id": 6,
+  "assignedTo": 15
+}

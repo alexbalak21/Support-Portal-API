@@ -23,11 +23,11 @@ import app.service.UserService;
 public class UserController {
 
     private final UserService userService;
-    private final app.service.AuthService authService;
+  
 
-    public UserController(UserService userService, app.service.AuthService authService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.authService = authService;
+    
     }
 
     /**
