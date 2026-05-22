@@ -9,6 +9,10 @@ target/
 logs/
 env/*
 
+### SERVER ###
+psql_conn.env
+db_cred_env.txt
+
 ### REACT BUILD ###
 src/main/resources/static/*
 
