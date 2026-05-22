@@ -1,4 +1,5 @@
 @baseUrl = http://localhost:8100
+@baseUrl = https://issue-tracker-vysg.onrender.com
 
 # Tokens from login
 @loginAccess_token = ""
@@ -7,6 +8,10 @@
 # Tokens from refresh
 @newAccess_token = ""
 @newRefresh_token = ""
+
+
+### GET REQUESTS ###
+GET {{baseUrl}}
 
 ### REGISTER USER ###
 POST {{baseUrl}}/api/auth/register
@@ -25,7 +30,8 @@ POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-    "email": "gordon.freeman@example.com",
+
+    "email": "michael.anderson@example.com",
     "password": "password1234"
 }
 
@@ -144,6 +150,11 @@ Content-Type: application/json
 ### LIST USERS ###
 GET {{baseUrl}}/api/admin/users
 Authorization: Bearer {{adminAccess_token}}
+
+
+### LIST ALL USERS ###
+GET {{baseUrl}}/api/users
+Authorization: Bearer {{login.response.body.data.access_token}}
 
 
 ### ASSIGN ROLES TO USER ###

@@ -98,7 +98,7 @@ public class UserService {
                 if (changed) {
                         userRepository.save(user);
                 }
-                return new UserBasic(user.getId(), user.getName());
+                return new UserBasic(user.getId(), user.getName(), toRoleIds(user));
         }
 
         // ----------------------------------------------------
@@ -108,10 +108,10 @@ public class UserService {
         public List<UserBasic> getAllUsersByRole(Long roleId) {
                 Role role = roleRepository.findById(roleId)
                                 .orElseThrow(() -> new RuntimeException("Role not found"));
-                return userRepository.findAll()
+                return userRepository.findAllWithRoles()
                                 .stream()
                                 .filter(user -> user.getRoles().contains(role))
-                                .map(user -> new UserBasic(user.getId(), user.getName()))
+                                .map(user -> new UserBasic(user.getId(), user.getName(), toRoleIds(user)))
                                 .toList();
         }
 
@@ -187,9 +187,16 @@ public class UserService {
         // ----------------------------------------------------
         @Transactional(readOnly = true)
         public List<UserBasic> getAllBasic() {
-                return userRepository.findAll()
+                return userRepository.findAllWithRoles()
                                 .stream()
-                                .map(user -> new UserBasic(user.getId(), user.getName()))
+                                .map(user -> new UserBasic(user.getId(), user.getName(), toRoleIds(user)))
+                                .toList();
+        }
+
+        private List<Long> toRoleIds(User user) {
+                return user.getRoles().stream()
+                                .map(Role::getId)
+                                .sorted()
                                 .toList();
         }
 

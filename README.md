@@ -163,7 +163,7 @@ Notes are **staff-only** and never exposed to end users.
 
 | Method | Path | Permission | Description |
 |---|---|---|---|
-| GET | `/users` | `user.read` | List all users (id + name). Filter by `?role={roleId}` |
+| GET | `/users` | `user.read` | List all users (id + name + roleIds). Filter by `?role={roleId}` |
 | GET | `/users/me` | `user.read` | Current user's full profile including profile image |
 | PATCH | `/users/me` | `user.update.self` | Update own name/email |
 | POST | `/users/profile-image` | Authenticated | Upload profile image (multipart/form-data) |

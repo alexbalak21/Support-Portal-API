@@ -58,7 +58,7 @@ Errors: 401 (Unauthorized)
 
 Permission: `user.read`
 
-Response: List of users (id, name)
+Response: List of users (id, name, roleIds)
 
 ---
 
