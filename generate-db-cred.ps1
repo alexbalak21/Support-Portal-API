@@ -1,8 +1,3 @@
-## Script to generate db_cred_env.txt from psql_conn.env
-
-# Put (copy) the external database credentials from render in psql_conn.env in the format:
-# psql_conn="postgresql://username:password@host:port/database"
-
 # Input file
 $envFile = ".\psql_conn.env"
 
@@ -12,26 +7,29 @@ if (-Not (Test-Path $envFile)) {
 }
 
 # Read the line containing psql_conn=
-$raw = Get-Content $envFile -Encoding UTF8 | Select-String -Pattern 'psql_conn\s*=' | ForEach-Object { $_.ToString() }
+$raw = Get-Content $envFile -Encoding UTF8 | Select-String -Pattern 'psql_conn\s*=' | ForEach-Object { $_.ToString().Trim() }
 
 if (-not $raw) {
     Write-Host "ERROR: psql_conn variable not found"
     exit 1
 }
 
-# Extract the URL inside the quotes
-$connectionString = $raw -replace '.*psql_conn\s*=\s*"', '' -replace '"$', ''
+# Extract the URL (supports quoted and unquoted formats)
+$connectionString = $raw -replace '.*psql_conn\s*=\s*', '' -replace '^"', '' -replace '"$', ''
 
 # Parse the connection string
-# Format: postgresql://user:pass@host:port/dbname
-if ($connectionString -match "^postgresql://([^:]+):([^@]+)@([^:/]+):?(\d+)?/(.+)$") {
+# Supports:
+# postgresql://user:pass@host/database
+# postgresql://user:pass@host:port/database
+if ($connectionString -match "^postgresql://([^:]+):([^@]+)@([^/]+?)(?::(\d+))?/(.+)$") {
     $username = $matches[1]
     $password = $matches[2]
-    $dbHost   = ($matches[3] -split '\.')[0]   # FIXED
+    $dbHost   = $matches[3]          # FULL host preserved
     $port     = if ($matches[4]) { $matches[4] } else { "5432" }
     $database = $matches[5]
 } else {
     Write-Host "ERROR: Could not parse connection string"
+    Write-Host "STRING READ: $connectionString"
     exit 1
 }
 
